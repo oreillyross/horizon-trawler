@@ -1,26 +1,16 @@
-const express = require('express')
-const app = express()
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const port = process.env.PORT || 80
+const { GraphQLServer } = require("graphql-yoga");
 
-require('dotenv').config()
+const typeDefs = `
+  type Query {
+    hello(name: String): String!
+  }
+`;
 
+const resolvers = {
+  Query: {
+    hello: (_, { name }) => `Hello ${name || "World"}`
+  }
+};
 
-app.use(logger('dev'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.get('*', (req, res) => res.status(200).send({
-  message: 'Welcome to the beginning of nothingness.',
-}));
-
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-
-
-
-
+const server = new GraphQLServer({ typeDefs, resolvers });
+server.start(() => console.log("Server is running on localhost:4000"));
