@@ -22,6 +22,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cross-fetch": "^3.0.4",
     "dotenv": "^8.0.0",
+    "elasticlunr": "^0.9.5",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",

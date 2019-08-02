@@ -8,6 +8,7 @@ const onlyAtoZ = require("./utils/only-a-z");
 require("cross-fetch/polyfill");
 const fs = require("fs");
 const path = require("path");
+const elasticlunr = require("elasticlunr");
 
 const { createHttpLink } = require("apollo-link-http");
 const { InMemoryCache } = require("apollo-cache-inmemory");
@@ -20,6 +21,12 @@ const cache = new InMemoryCache();
 const client = new ApolloClient({
   link,
   cache
+});
+
+const index = elasticlunr(function() {
+  this.addField("title");
+  this.addField("body");
+  this.setRef("id");
 });
 
 const GET_AUTOMATEDSEARCH_ON = gql`
@@ -39,28 +46,37 @@ async function checkAutomatedSearch() {
 }
 
 async function getArticleText(url) {
-  const response = await fetch(url);
-  const html = await response.text();
-  return html;
-  //return "some text";
+  //const response = await fetch(url);
+  //const html = await response.text();
+  //return html;
+  return `Lebanon's Cabinet endorsed Monday the final draft budget to be submitted to Parliament for ratification, as pressure mounts on the small Mediterranean country to get its finances in order.
+
+The budget, one of the "most austere in the history of Lebanon" as Prime Minister Saad Hariri recently said, features a number of measures to raise revenues and decrease spending.
+
+Lebanon's budget deficit, which ballooned to 11.5 percent in 2018, will be reduced to 7.5 percent, Information Minister Jamal Jarrah said. 
+
+To bolster the state's coffers, the Cabinet endorsed the second tax hike in two years on the interest earned on deposits and government-issued treasury bills and bonds, much to the ire of the banking sector. `;
 }
+const keywords = "tax";
 
 async function processSources() {
-  const keywords = ["beirut", "roadblocks", "retired army officers"];
   const articles = await annahar;
   return Promise.all(
-    articles.map(article => {
+    articles.map((article, idx) => {
       getArticleText(article.href).then(text => {
         const fileName = onlyAtoZ(spaceToUnderScore(article.title));
-        fs.writeFileSync(path.join("articles", fileName), text);
+        index.addDoc({ id: ++idx, title: article.title, body: text });
+        fs.writeFileSync(path.join("articles", fileName + ".html"), text);
       });
     })
   );
-  // get articles by source
-  // map through keywords attached to source if it appears save article and save metadate in hasura DB
 }
-//
-processSources();
+
+processSources().then(() => {
+  console.log("do search");
+  console.log(index.search(keywords));
+  console.log(index.toJSON());
+});
 
 function automate() {
   checkAutomatedSearch().then(automatedSearchOn => {
