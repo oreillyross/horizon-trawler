@@ -8,3 +8,6 @@
 # saves the metadata of articles on postgres database
 # saves the text of article (strip images and hyperlinks, etc)
 # in postgres database
+
+# function takes a url and returns the html file url -> text [html file]
+
