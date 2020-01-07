@@ -1,6 +1,0 @@
-CREATE TABLE articles (
-   article_id serial PRIMARY KEY,
-   title VARCHAR (200) UNIQUE NOT NULL,
-   article NOT NULL,
-   trawled_on TIMESTAMP NOT NULL
-);
