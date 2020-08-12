@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "develop": "nodemon --exec babel-node index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "develop": "nodemon --exec babel-node test.js",
+    "d": "babel-node data/scripts.js"
   },
   "engines": {
     "node": "10.16.0",
@@ -16,23 +17,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-boost": "^0.4.3",
-    "apollo-cache-inmemory": "^1.6.2",
-    "apollo-link-http": "^1.5.15",
-    "cheerio": "^1.0.0-rc.3",
-    "cross-fetch": "^3.0.4",
-    "dotenv": "^8.0.0",
-    "elasticlunr": "^0.9.5",
-    "express": "^4.17.1",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
-    "morgan": "^1.9.1",
-    "node-fetch": "^2.6.0"
-  },
-  "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "nodemon": "^1.19.1"
+    "@babel/preset-env": "7.5.5",
+    "babel-preset-env": "1.7.0",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "graphql-yoga": "1.18.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.3",
+    "prisma2": "2.0.0-preview-2",
+    "sequelize": "^5.10.1"
   }
 }
+
+    "nodemon": "^1.19.1"
+  }
