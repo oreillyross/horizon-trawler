@@ -1,6 +1,6 @@
 {
   "name": "horizon-trawler",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -34,6 +34,3 @@
     "sequelize": "^5.10.1"
   }
 }
-
-    "nodemon": "^1.19.1"
-  }
